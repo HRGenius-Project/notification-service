@@ -1,0 +1,40 @@
+server:
+  port: 8098
+
+spring:
+  application:
+    name: notification-service
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:hrgenius}
+    password: ${RABBITMQ_PASSWORD:Rabbit@12345}
+
+  # Mail config (Local dev ke liye mock/logging mode enable rakhenge)
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+app:
+  rabbitmq:
+    exchange: hrgenius.exchange
+    queue:
+      payroll-notify: notification.payroll.queue
+      leave-notify: notification.leave.queue
+    routing-key:
+      payroll-processed: payroll.processed
+      leave-approved: leave.approved
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
